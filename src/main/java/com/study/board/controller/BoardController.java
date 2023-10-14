@@ -35,6 +35,15 @@ public class BoardController {
         return "list";
     }
 
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id, Model model) {
+        //기능 1: 해당 게시물 조회수 올리기
+        boardService.updateHits(id);
 
-
+        //기능 2 : 해당 게시물 상세보기
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "detail";
+    }
+//
 }

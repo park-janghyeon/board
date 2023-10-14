@@ -6,8 +6,10 @@ import com.study.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // 이 service 패키지에서
 // DTO를 Entity로 변환하거나 (이건 Entity 클래스에서 할 것이다)
@@ -35,5 +37,24 @@ public class BoardService {
         }
         return boardDTOList;
     }
+
+
+    @Transactional // 별도의 메소드를 작성헀으므로 Transactional을 붙여줘야한다
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        if (optionalBoardEntity.isPresent()) {
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+            return boardDTO;
+        }   else {
+            return null;
+        }
+    }
+
+
 
 }
