@@ -6,6 +6,9 @@ import com.study.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // 이 service 패키지에서
 // DTO를 Entity로 변환하거나 (이건 Entity 클래스에서 할 것이다)
 // Entity를 DTO로 변환하는 작업을 한다 (이건 Controller에서 할 것이다)
@@ -19,4 +22,18 @@ public class BoardService {
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
         boardRepository.save(boardEntity);
     }
+
+    public List<BoardDTO> findAll() {
+        //findAll 하면 repository에서 entity로 온다!
+        List<BoardEntity> boardEntityList = boardRepository.findAll();
+        //entity를 dto로 변환
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+
+        for(BoardEntity boardEntity : boardEntityList){
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+            boardDTOList.add(boardDTO);
+        }
+        return boardDTOList;
+    }
+
 }

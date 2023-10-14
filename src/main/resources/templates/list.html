@@ -1,27 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"> <!--타임리프 템플릿 엔진-->
+
 <head>
   <meta charset="UTF-8">
   <title>list</title>
+  <!-- Materialize CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
+
 <body>
-<table>
-  <tr>
-    <th>id</th>
-    <th>title</th>
-    <th>title(||쓰지 않은 경우)</th>
-    <th>writer</th>
-    <th>date</th>
-    <th>hits</th>
-  </tr>
-  <tr th:each="board: ${boardList}">
-    <td th:text="${board.id}"></td>
-    <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
-    <td><a th:href="@{/board/${board.id}}" th:text="${board.boardTitle}"></a></td>
-    <td th:text="${board.boardWriter}"></td>
-    <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
-    <td th:text="${board.boardHits}"></td>
-  </tr>
-</table>
+
+<div class="container">
+  <table class="highlight responsive-table">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>title</th>
+      <th>title(||쓰지 않은 경우)</th>
+      <th>writer</th>
+      <th>date</th>
+      <th>hits</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board: ${boardList}">
+      <td th:text="${board.id}"></td>
+      <td><a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+      <td><a th:href="@{/board/${board.id}}" th:text="${board.boardTitle}"></a></td>
+      <td th:text="${board.boardWriter}"></td>
+      <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <td th:text="${board.boardHits}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Materialize JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
+
 </html>
