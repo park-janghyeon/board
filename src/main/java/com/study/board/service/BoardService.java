@@ -56,5 +56,10 @@ public class BoardService {
     }
 
 
-
+    public BoardDTO update(BoardDTO boardDTO) {
+        //똑같이 save를 쓴다 - insert와 update를 구분하는 법은 id 값의 유무
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+        boardRepository.save(boardEntity);
+        return findById(boardDTO.getId());
+    }
 }
