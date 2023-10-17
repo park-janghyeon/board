@@ -4,6 +4,10 @@ import com.study.board.dto.BoardDTO;
 import com.study.board.entity.BoardEntity;
 import com.study.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -55,7 +59,6 @@ public class BoardService {
         }
     }
 
-
     public BoardDTO update(BoardDTO boardDTO) {
         //똑같이 save를 쓴다 - insert와 update를 구분하는 법은 id 값의 유무
         BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
@@ -65,5 +68,43 @@ public class BoardService {
 
     public void delete(Long id) {
         boardRepository.deleteById(id);
+    }
+
+    public Page<BoardDTO> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1; //0부터 시작하므로 1빼줌
+        int pageLimit = 10; //한 페이지에 보여줄 글 갯수
+
+        //page가 entity이므로 dto로 바꿔줘야함
+        Page<BoardEntity> boardEntities =
+                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        //Page 객체가 어떤 값들을 가지고 있는지 print 해보기
+//        System.out.println("=====================================");
+//        System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); //현재 페이지 글 목록
+//        System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); //전체 글 갯수
+//        System.out.println("boardEntities.getTotalPages() = " + boardEntities.getTotalPages()); //전체 페이지 수
+//        System.out.println("boardEntities.getNumberOfElements() = " + boardEntities.getNumberOfElements()); //현재 페이지 글 갯수
+//        System.out.println("boardEntities.getSize() = " + boardEntities.getSize()); //페이지당 글 갯수
+//        System.out.println("boardEntities.getNumber() = " + boardEntities.getNumber()); //현재 페이지 번호
+//        System.out.println("boardEntities.hasNext() = " + boardEntities.hasNext()); //다음 페이지 존재 여부
+//        System.out.println("boardEntities.hasPrevious() = " + boardEntities.hasPrevious()); //이전 페이지 존재 여부
+//        System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst()); //현재 페이지가 첫 페이지인지 여부
+//        System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); //현재 페이지가 마지막 페이지인지 여부
+//        System.out.println("=====================================");
+
+        //목록 : id, writer, title, hits, createdTime
+        //리스트 객체 dto로 변환하면 메서드 사용못함, page 객체를 담아갈 수 있는 방법이 없는가?
+        //여기서 board는 entity 객체를 의미. map은 entity를 dto로 변환해줌
+        Page<BoardDTO> boardDTOS = boardEntities.map(board ->
+                new BoardDTO(
+                        board.getId(),
+                        board.getBoardWriter(),
+                        board.getBoardTitle(),
+                        board.getBoardHits(),
+                        board.getCreatedTime()
+                )
+        );
+
+        return boardDTOS;
     }
 }
