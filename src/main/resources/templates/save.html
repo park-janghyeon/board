@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="row">
-        <form class="col s12" action="/board/save" method="post" enctype="multipart/form-data">
+        <form class="col s12" action="/board/save" method="post" enctype="multipart/form-data"> <!-- Added enctype (file) -->
             <div class="input-field col s12">
                 <input type="text" id="boardWriter" name="boardWriter">
                 <label for="boardWriter">writer</label>
@@ -30,7 +30,7 @@
             <div class="file-field input-field col s12">
                 <div class="btn">
                     <span>File</span>
-                    <input type="file" name="boardFile">
+                    <input type="file" name="boardFile" multiple> <!-- 파일이 여러개일때는 multiple -->
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text" placeholder="Upload file">

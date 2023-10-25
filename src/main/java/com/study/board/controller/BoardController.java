@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.study.board.dto.BoardDTO;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO){
+    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
         System.out.println("boardDTO: " + boardDTO); //dto에 담긴 데이터 확인
         boardService.save(boardDTO);
         return "index";

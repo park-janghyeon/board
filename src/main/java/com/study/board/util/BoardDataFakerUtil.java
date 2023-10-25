@@ -2,6 +2,7 @@ package com.study.board.util;
 
 import com.study.board.entity.BoardEntity;
 import com.study.board.repository.BoardRepository;
+
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -14,3 +14,14 @@
 5. 글삭제(/board/delete/{id})
     - /board/paging?page=2
 6. 페이징처리
+7. 파일(이미지) 첨부하기
+   - 단일 파일 첨부
+   - 다중 파일 첨부
+   - 파일 첨부와 관련해서 추가될 부분
+      - save.html
+      - BoardDTO
+      - BoardService.save()
+      - BoardEntity
+      - BoardFileEntity, BoardFileRepository 추가
+      - detail.html
+   
