@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import net.coobird.thumbnailator.Thumbnails; //이미지 크기 조정
+
 // 이 service 패키지에서
 // DTO를 Entity로 변환하거나 (이건 Entity 클래스에서 할 것이다)
 // Entity를 DTO로 변환하는 작업을 한다 (이건 Controller에서 할 것이다)
@@ -58,7 +60,11 @@ public class BoardService {
                 String originalFileName = boardFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
                 String savePath = "C://SW_WORKSPACE//Java//board//src//main//resources//images/" + storedFileName;
-                boardFile.transferTo(new File(savePath));
+
+                // 이미지 크기 조정
+                Thumbnails.of(boardFile.getInputStream())
+                        .size(500, 500) // 가로 최대 500, 세로 최대 500
+                        .toFile(new File(savePath));
 
                 BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFileName, storedFileName);
                 boardFileRepository.save(boardFileEntity);

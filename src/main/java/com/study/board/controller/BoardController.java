@@ -26,7 +26,6 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
-        System.out.println("boardDTO: " + boardDTO); //dto에 담긴 데이터 확인
         boardService.save(boardDTO);
         return "index";
     }
@@ -66,7 +65,6 @@ public class BoardController {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
         return "detail";
-//        return "redirect:/board/" + boardDTO.getId();
     }
 
     @GetMapping("/delete/{id}")

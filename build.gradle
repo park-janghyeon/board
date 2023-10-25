@@ -34,6 +34,8 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'net.coobird:thumbnailator:0.4.13' // 이미지 사이즈 조정 라이브러리
+
 }
 
 tasks.named('test') {
